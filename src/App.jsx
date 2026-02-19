@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react'
+import emailjs from '@emailjs/browser'
 import FloatingNavbar from '@/components/FloatingNavbar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -5,6 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator'
 import { Github, Linkedin, Mail, Phone, SendHorizonal } from 'lucide-react'
 import avatarImg from '@/assets/avatar.png'
+
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
 
 const profile = {
   name: 'Maisha Maliha Chowa',
@@ -60,33 +66,12 @@ const skillGroups = [
   },
 ]
 
-const experience = [
-  {
-    title: 'SQA Automation Engineer',
-    company: 'Koolio.ai',
-    timeline: 'Apr 2024 – Present · Remote',
-    bullets: [
-      'Engineered UI and API automation suites in Playwright (Python), reducing flaky tests and improving coverage.',
-      'Built detailed test cases from PRDs and ensured end-to-end feature validation.',
-      'Monitored GCP logs and PostgreSQL to troubleshoot performance bottlenecks.',
-      'Integrated automated suites into GitHub Actions for continuous regression testing.',
-    ],
-  },
-]
-
 const education = [
   {
     title: 'BSc in Computer Science & Engineering',
     org: 'Mawlana Bhashani Science & Technology University',
     timeline: '2019 – 2024',
     detail: 'CGPA: 3.59',
-  },
-]
-
-const awards = [
-  {
-    title: 'QA Process Improvement Award',
-    detail: 'Recognized for reducing regression time by migrating automation suites to Playwright.',
   },
 ]
 
@@ -121,13 +106,26 @@ const projects = [
   },
 ]
 
-const certifications = [
-  'ISTQB Foundation (in progress)',
-  'Postman API Fundamentals',
-  'GitHub Actions CI/CD',
-]
-
 function App() {
+  const formRef = useRef(null)
+  const [sendStatus, setSendStatus] = useState('idle')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSendStatus('sending')
+    emailjs
+      .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current, EMAILJS_PUBLIC_KEY)
+      .then(() => {
+        setSendStatus('sent')
+        formRef.current.reset()
+        setTimeout(() => setSendStatus('idle'), 4000)
+      })
+      .catch(() => {
+        setSendStatus('error')
+        setTimeout(() => setSendStatus('idle'), 4000)
+      })
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <FloatingNavbar />
@@ -283,68 +281,19 @@ function App() {
           <Separator className="my-12" />
 
           <section id="qualification" className="space-y-6">
-            <h2 className="text-2xl font-semibold text-primary">Qualification</h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Education</CardTitle>
-                  <CardDescription>Academic background</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {education.map((item) => (
-                    <div key={item.title} className="space-y-1 text-sm text-muted-foreground">
-                      <p className="font-medium text-foreground">{item.title}</p>
-                      <p>{item.org}</p>
-                      <p>{item.timeline}</p>
-                      <p>{item.detail}</p>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Work</CardTitle>
-                  <CardDescription>Recent roles</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {experience.map((role) => (
-                    <div key={role.company} className="space-y-2 text-sm text-muted-foreground">
-                      <p className="font-medium text-foreground">{role.title}</p>
-                      <p>{role.company}</p>
-                      <p>{role.timeline}</p>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Awards</CardTitle>
-                  <CardDescription>Recognition highlights</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm text-muted-foreground">
-                  {awards.map((award) => (
-                    <p key={award.title}>
-                      <span className="font-medium text-foreground">{award.title}</span> — {award.detail}
-                    </p>
-                  ))}
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Certifications</CardTitle>
-                  <CardDescription>Professional learning</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-2">
-                  {certifications.map((cert) => (
-                    <Badge key={cert} variant="outline">
-                      {cert}
-                    </Badge>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
+            <h2 className="text-2xl font-semibold text-primary">Academic Background</h2>
+            <Card>
+              <CardContent className="space-y-4 pt-6">
+                {education.map((item) => (
+                  <div key={item.title} className="space-y-1 text-sm text-muted-foreground">
+                    <p className="font-medium text-foreground">{item.title}</p>
+                    <p>{item.org}</p>
+                    <p>{item.timeline}</p>
+                    <p>{item.detail}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           </section>
 
           <Separator className="my-12" />
@@ -395,28 +344,16 @@ function App() {
 
               <Card>
                 <CardContent className="p-6">
-                  <form
-                    className="space-y-4"
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      const formData = new FormData(e.currentTarget)
-                      const name = formData.get('name')
-                      const email = formData.get('email')
-                      const message = formData.get('message')
-                      const subject = encodeURIComponent(`Message from ${name}`)
-                      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)
-                      window.open(`mailto:${profile.email}?subject=${subject}&body=${body}`, '_self')
-                    }}
-                  >
+                  <form ref={formRef} className="space-y-4" onSubmit={handleSubmit}>
                     <input
-                      name="name"
+                      name="from_name"
                       required
                       className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Name"
                       type="text"
                     />
                     <input
-                      name="email"
+                      name="from_email"
                       required
                       className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Email"
@@ -428,9 +365,15 @@ function App() {
                       className="min-h-[160px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Message"
                     />
-                    <Button type="submit" className="gap-2">
-                      Send Message <SendHorizonal size={16} />
+                    <Button type="submit" className="gap-2" disabled={sendStatus === 'sending'}>
+                      {sendStatus === 'sending' ? 'Sending...' : 'Send Message'} <SendHorizonal size={16} />
                     </Button>
+                    {sendStatus === 'sent' && (
+                      <p className="text-sm text-green-600">Message sent successfully!</p>
+                    )}
+                    {sendStatus === 'error' && (
+                      <p className="text-sm text-red-600">Failed to send. Please try again.</p>
+                    )}
                   </form>
                 </CardContent>
               </Card>
