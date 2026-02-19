@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin, Mail, Phone, SendHorizonal } from 'lucide-react'
 import avatarImg from '@/assets/avatar.png'
 
 const profile = {
@@ -14,7 +14,7 @@ const profile = {
   email: 'maisha.chowa@gmail.com',
   phone: '+8801873073300',
   summary:
-    'SQA Automation Engineer with hands-on experience in UI/API automation, CI/CD integration, and performance testing for AI-powered products. Skilled in Playwright (Python), Selenium, and test strategy design.',
+    'With 2+ years of experience ensuring quality for AI-driven products through Manual testing, UI/API automation, CI/CD pipelines, and performance testing using Playwright (Python), Selenium, Postman and Locust.',
   resumeUrl: '#',
   links: [
     { label: 'GitHub', href: 'https://github.com/' },
@@ -126,8 +126,6 @@ const certifications = [
   'Postman API Fundamentals',
   'GitHub Actions CI/CD',
 ]
-
-const languages = ['Bangla (Native)', 'English (Fluent)', 'Hindi (Fluent)']
 
 function App() {
   return (
@@ -351,50 +349,89 @@ function App() {
 
           <Separator className="my-12" />
 
-          <section id="contact" className="space-y-6">
-            <h2 className="text-2xl font-semibold text-primary">Contact Me</h2>
-            <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Get in touch</CardTitle>
-                  <CardDescription>Open for QA automation roles and collaborations.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 text-sm text-muted-foreground">
-                  <p>Email: {profile.email}</p>
-                  <p>Phone: {profile.phone}</p>
-                  <p>Location: {profile.location}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {languages.map((language) => (
-                      <Badge key={language} variant="secondary">
-                        {language}
-                      </Badge>
-                    ))}
+          <section id="contact" className="space-y-8">
+            <div className="text-center">
+              <h2 className="text-3xl font-semibold text-primary">Contact Me</h2>
+              <p className="mt-2 text-muted-foreground">Get in Touch</p>
+            </div>
+
+            <div className="grid items-start gap-10 md:grid-cols-2">
+              <div className="space-y-8 pt-4">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Mail size={20} />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-foreground">Email</p>
+                    <p className="text-sm text-muted-foreground">{profile.email}</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <div className="flex items-start gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Phone size={20} />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-foreground">Phone</p>
+                    <p className="text-sm text-muted-foreground">{profile.phone}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Linkedin size={20} />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-foreground">LinkedIn</p>
+                    <a
+                      href={profile.links.find((l) => l.label === 'LinkedIn')?.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-muted-foreground hover:text-primary"
+                    >
+                      @maisha-chowa
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               <Card>
-                <CardHeader>
-                  <CardTitle>Send a message</CardTitle>
-                  <CardDescription>Fill in the form and I'll reply quickly.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-3 md:grid-cols-2">
+                <CardContent className="p-6">
+                  <form
+                    className="space-y-4"
+                    onSubmit={(e) => {
+                      e.preventDefault()
+                      const formData = new FormData(e.currentTarget)
+                      const name = formData.get('name')
+                      const email = formData.get('email')
+                      const message = formData.get('message')
+                      const subject = encodeURIComponent(`Message from ${name}`)
+                      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)
+                      window.open(`mailto:${profile.email}?subject=${subject}&body=${body}`, '_self')
+                    }}
+                  >
                     <input
-                      className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+                      name="name"
+                      required
+                      className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Name"
                       type="text"
                     />
                     <input
-                      className="h-11 rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+                      name="email"
+                      required
+                      className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
                       placeholder="Email"
                       type="email"
                     />
-                  </div>
-                  <textarea
-                    className="min-h-[140px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-                    placeholder="Message"
-                  />
-                  <Button type="button">Send Message</Button>
+                    <textarea
+                      name="message"
+                      required
+                      className="min-h-[160px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                      placeholder="Message"
+                    />
+                    <Button type="submit" className="gap-2">
+                      Send Message <SendHorizonal size={16} />
+                    </Button>
+                  </form>
                 </CardContent>
               </Card>
             </div>
@@ -402,11 +439,10 @@ function App() {
         </div>
       </main>
 
-      <footer className="border-t py-8">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {new Date().getFullYear()} {profile.name}. All rights reserved.</span>
-          <span>Built with React, Vite, Tailwind CSS, and shadcn/ui.</span>
-        </div>
+      <footer className="bg-primary py-8">
+        <p className="text-center text-sm text-primary-foreground">
+          © {new Date().getFullYear()} {profile.name}. All rights reserved.
+        </p>
       </footer>
     </div>
   )
