@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Moon, Sun, Layers, Home, Code, Send, User } from 'lucide-react'
+import { Moon, Sun, Layers, Code, Send, User, Briefcase } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const navItems = [
-  { href: '#home', label: 'Home', icon: Home },
   { href: '#about', label: 'About', icon: User },
+  { href: '#experience', label: 'Experience', icon: Briefcase },
   { href: '#skills', label: 'Skills', icon: Code },
   { href: '#portfolio', label: 'Portfolio', icon: Layers },
   { href: '#contact', label: 'Contact', icon: Send },

@@ -23,6 +23,7 @@ import {
   Gauge,
   GitBranch,
   Code,
+  Briefcase,
 } from "lucide-react";
 import avatarImg from "@/assets/avatar.png";
 
@@ -51,11 +52,14 @@ const profile = {
   ],
 };
 
-const aboutHighlights = [
-  "Built and maintained UI/API automation suites in Playwright (Python) with reliable CI/CD.",
-  "Migrated Selenium suites to Playwright to reduce flakiness and speed up execution.",
-  "Validated AI-driven audio workflows with deep API, logging, and database checks.",
-];
+const about = {
+  paragraphs: [
+    "I'm a detail-oriented SQA Automation Engineer focused on building scalable test frameworks and ensuring reliable, high-quality software through manual testing, automation, and continuous integration.",
+    "With a strong foundation as a MERN stack engineer, I bring a Dev-to-QA mindset, bridging development and quality by designing tests that integrate seamlessly into CI/CD pipelines and support high-performance, production-ready releases.",
+    "I work across manual and automated testing, crafting robust UI, API, and performance test suites that validate complex workflows, catch issues early, and maintain stability in fast-moving product environments.",
+    "Driven by a growth mindset, I continuously evolve my skills in modern automation tools, performance testing, and SDLC optimization to deliver quality at scale.",
+  ],
+};
 
 const skillGroups = [
   {
@@ -107,6 +111,31 @@ const skillGroups = [
     subtitle: "Languages",
     icon: Code,
     items: ["Python", "JavaScript (ES6+)", "TypeScript", "Java"],
+  },
+];
+
+const experiences = [
+  {
+    title: "SQA Automation Engineer",
+    company: "Koolio.ai",
+    location: "Palo Alto, California, USA | Remote",
+    timeline: "April 2024 – Present",
+    description:
+      "Koolio.ai is an AI-powered audio creation platform that enables podcasters and content creators to record, edit, and enhance audio using intelligent automation.",
+    summary:
+      "I joined Koolio.ai at an early stage as the only SQA engineer, owning the complete quality assurance process across multiple product versions. I'm responsible for manual testing, bug tracking, database testing (PostgreSQL), and UI & API automation with Playwright.",
+    highlights: [
+      "Led manual testing and Selenium-based UI automation for early releases, helping stabilize the initial product before scale.",
+      "Designed and implemented the entire test strategy and test case suite for the new platform version, achieving 100% core feature coverage.",
+      "Transitioned automation from Selenium to Playwright (Python), reducing flaky tests by ~50% and improving execution speed by ~70% via parallel execution.",
+      "Responsible for manual testing, bug tracking, database testing (PostgreSQL), and UI & API automation with Playwright.",
+      "Performed API testing using Postman and continuous API monitoring to catch backend issues early.",
+      "Executed load and stress testing with Locust, identifying performance bottlenecks and improving system reliability under concurrent audio processing.",
+      "Integrated automated test suites into CI/CD pipelines using GitHub Actions, contributing to faster and more confident release cycles.",
+      "Worked closely with developers and product managers to reduce production defects and ensure high-quality, scalable releases.",
+    ],
+    takeaway:
+      "This role strengthened my ability to own quality end-to-end, work independently in a startup environment, and deliver reliable testing solutions for complex AI-powered systems.",
   },
 ];
 
@@ -265,23 +294,57 @@ function App() {
           <Separator className="my-12" />
 
           <section id="about" className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-semibold text-primary">About Me</h2>
-              <p className="text-muted-foreground">
-                {profile.summary} I enjoy partnering with product teams to ship
-                stable, high-quality releases and turning manual checks into
-                scalable automation.
-              </p>
-            </div>
-            <div className="grid gap-4 md:grid-cols-3">
-              {aboutHighlights.map((item) => (
-                <Card key={item}>
-                  <CardContent className="py-5 text-sm text-muted-foreground">
-                    {item}
-                  </CardContent>
-                </Card>
+            <h2 className="text-2xl font-semibold text-primary">About Me</h2>
+            <div className="space-y-4">
+              {about.paragraphs.map((text) => (
+                <p key={text.slice(0, 30)} className="text-sm leading-relaxed text-muted-foreground">
+                  {text}
+                </p>
               ))}
             </div>
+          </section>
+
+          <Separator className="my-12" />
+
+          <section id="experience" className="space-y-6">
+            <h2 className="text-2xl font-semibold text-primary">Experience</h2>
+            {experiences.map((exp) => (
+              <Card key={exp.company}>
+                <CardContent className="space-y-6 pt-6">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <Briefcase size={20} />
+                    </span>
+                    <div className="space-y-1">
+                      <p className="font-semibold text-primary">
+                        {exp.title} — {exp.company}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {exp.location}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {exp.timeline}
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground">
+                    {exp.description}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{exp.summary}</p>
+
+                  <ul className="list-disc space-y-2 pl-5 text-sm text-muted-foreground">
+                    {exp.highlights.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+
+                  <p className="text-sm italic text-muted-foreground">
+                    {exp.takeaway}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
           </section>
 
           <Separator className="my-12" />
