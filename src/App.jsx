@@ -8,9 +8,9 @@ import { Separator } from '@/components/ui/separator'
 import { Github, Linkedin, Mail, Phone, SendHorizonal } from 'lucide-react'
 import avatarImg from '@/assets/avatar.png'
 
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 const profile = {
   name: 'Maisha Maliha Chowa',
