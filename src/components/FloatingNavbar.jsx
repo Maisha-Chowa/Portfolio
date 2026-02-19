@@ -15,7 +15,7 @@ function FloatingNavbar({ className = '' }) {
   return (
     <nav
       className={cn(
-        'fixed bottom-6 left-1/2 z-50 w-[min(90vw,640px)] -translate-x-1/2 rounded-full border bg-white px-3 py-2 shadow-lg',
+        'fixed top-4 left-1/2 z-50 w-[min(90vw,640px)] -translate-x-1/2 rounded-full border bg-white/80 px-3 py-2 shadow-lg backdrop-blur-md',
         className
       )}
     >
