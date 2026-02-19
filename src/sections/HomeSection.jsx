@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import avatarImg from "@/assets/avatar.png";
+import resumePdf from "@/assets/Maisha-Resume.pdf";
 import { profile } from "@/data/portfolio-data";
 
 export default function HomeSection() {
@@ -58,7 +59,7 @@ export default function HomeSection() {
             <a href="#contact">Contact Me</a>
           </Button>
           <Button asChild variant="outline">
-            <a href={profile.resumeUrl}>Download Resume</a>
+            <a href={resumePdf} target="_blank" rel="noreferrer">Download Resume</a>
           </Button>
         </div>
         <div className="flex items-center justify-center gap-6 md:hidden">

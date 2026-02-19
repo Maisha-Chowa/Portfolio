@@ -20,8 +20,8 @@ export const profile = {
     "With 2+ years of experience ensuring quality for AI-driven products through Manual testing, UI/API automation, CI/CD pipelines, and performance testing using Playwright (Python), Selenium, Postman and Locust.",
   resumeUrl: "#",
   links: [
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "GitHub", href: "https://github.com/Maisha-Chowa" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/maisha-maliha-chowa/" },
   ],
   stats: [
     { label: "Years experience", value: "2+" },

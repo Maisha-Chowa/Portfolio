@@ -1,52 +1,58 @@
-import { useState, useEffect } from 'react'
-import { Moon, Sun, Layers, Code, Send, User, Briefcase } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Moon, Sun, Layers, Code, Send, User, Briefcase } from "lucide-react";
 
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import logoImg from "@/assets/maisha-logo.png";
 
 const navItems = [
-  { href: '#about', label: 'About', icon: User },
-  { href: '#experience', label: 'Experience', icon: Briefcase },
-  { href: '#skills', label: 'Skills', icon: Code },
-  { href: '#portfolio', label: 'Projects', icon: Layers },
-  { href: '#contact', label: 'Contact', icon: Send },
-]
+  { href: "#about", label: "About", icon: User },
+  { href: "#experience", label: "Experience", icon: Briefcase },
+  { href: "#skills", label: "Skills", icon: Code },
+  { href: "#portfolio", label: "Projects", icon: Layers },
+  { href: "#contact", label: "Contact", icon: Send },
+];
 
-function FloatingNavbar({ className = '' }) {
+function FloatingNavbar({ className = "" }) {
   const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark'
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") === "dark";
     }
-    return false
-  })
+    return false;
+  });
 
   useEffect(() => {
-    const root = document.documentElement
+    const root = document.documentElement;
     if (isDark) {
-      root.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      root.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
-  }, [isDark])
+  }, [isDark]);
 
   return (
     <nav
       className={cn(
-        'fixed top-4 left-1/2 z-50 w-[min(90vw,640px)] -translate-x-1/2 rounded-full border bg-white/80 px-3 py-2 shadow-lg backdrop-blur-md dark:bg-gray-900/80',
-        className
+        "fixed top-4 left-1/2 z-50 w-[min(90vw,720px)] -translate-x-1/2 rounded-full border bg-white/80 px-3 py-2 shadow-lg backdrop-blur-md dark:bg-gray-900/80",
+        className,
       )}
     >
       <div className="flex items-center justify-between gap-4">
-        <a href="#home" className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            MC
-          </span>
-          <span className="hidden sm:inline">Maisha</span>
+        <a
+          href="#home"
+          className="flex items-center gap-2 text-sm font-semibold text-foreground"
+        >
+          <img
+            src={logoImg}
+            alt="MC"
+            className="h-9 w-9 rounded-full object-contain"
+          />
         </a>
 
         <ul className="flex flex-1 items-center justify-center gap-1 sm:gap-3">
+          {/* eslint-disable-next-line no-unused-vars */}
           {navItems.map(({ href, label, icon: Icon }) => (
             <li key={label}>
               <a
@@ -68,12 +74,16 @@ function FloatingNavbar({ className = '' }) {
             className="text-foreground hover:bg-foreground/5"
             onClick={() => setIsDark((prev) => !prev)}
           >
-            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {isDark ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </div>
     </nav>
-  )
+  );
 }
 
-export default FloatingNavbar
+export default FloatingNavbar;
